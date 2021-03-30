@@ -52,3 +52,25 @@ key = Types.Key "12345678901234567890123456789012"
 
 secret :: Hmac.Secret
 secret = Hmac.Secret "sample_secret"
+
+-- manualEncryption :: String
+-- manualEncryption = do
+--   buf <- fromString identifier UTF8
+--   cip <- Cipher.createCipherIv Types.AES256GCM key iv
+--   rbuf1 <- Cipher.update cip buf
+--   rbuf2 <- Cipher.final cip
+--   rbuf <- concat [ rbuf1, rbuf2 ]
+--   aTag <- Cipher.getAuthTag cip
+--   encRes <- toString Base64 rbuf
+--   encRes
+-- manualDecryption :: String
+-- manualDecryption encRes tag = do
+--   buf <- fromString encRes Base64
+--   dec <- Decipher.createDecipherIv Types.AES256GCM key iv
+--   _ <- Decipher.setAuthTag dec tag
+--   rbuf1 <- Decipher.update dec buf
+--   rbuf2 <- Decipher.final dec
+--   rbuf <- concat [ rbuf1, rbuf2 ]
+--   decRes <- toString UTF8 rbuf
+--   dec64 <- toString Base64 rbuf
+--   dec64

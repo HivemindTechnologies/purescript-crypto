@@ -9,13 +9,11 @@ module Node.Crypto.Types
   , InitializationVector(..)
   ) where
 
-import Data.Show (class Show)
+import Data.Show (class Show, show)
 import Data.Newtype (class Newtype)
 import Node.Buffer as Buffer
 import Node.Buffer (Buffer, fromString, toString, concat)
-import Node.Encoding as Encoding
 import Node.Encoding (Encoding(UTF8, Hex, Base64))
-import Prelude (show)
 
 data IvAlgorithm
   = AES256GCM

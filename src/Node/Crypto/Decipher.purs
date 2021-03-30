@@ -85,9 +85,11 @@ decipherIv ::
   Ciphertext ->
   Encoding ->
   Effect Plaintext
-decipherIv alg key iv tag (Ciphertext value) enc = do
+decipherIv alg (Key key) (InitializationVector iv) tag (Ciphertext value) enc = do
   buf <- fromString value enc
-  dec <- createDecipherIv alg key iv
+  skey <- fromString key Base64
+  biv <- fromString iv Base64
+  dec <- createDecipherIv alg skey biv
   _ <- setAuthTag dec tag
   rbuf1 <- update dec buf
   rbuf2 <- final dec
@@ -105,10 +107,10 @@ createDecipher alg (Password password) = runFn2 _createDecipher (show alg) passw
 
 foreign import _createDecipher :: Fn2 String String (Effect Decipher)
 
-createDecipherIv :: IvAlgorithm -> Key -> InitializationVector -> Effect Decipher
-createDecipherIv alg (Key key) (InitializationVector iv) = runFn3 _createDecipherIv (show alg) key iv
+createDecipherIv :: IvAlgorithm -> Buffer -> Buffer -> Effect Decipher
+createDecipherIv alg key iv = runFn3 _createDecipherIv (show alg) key iv
 
-foreign import _createDecipherIv :: Fn3 String String String (Effect Decipher)
+foreign import _createDecipherIv :: Fn3 String Buffer Buffer (Effect Decipher)
 
 update :: Decipher -> Buffer -> Effect Buffer
 update = runFn2 _update
