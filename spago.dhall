@@ -1,12 +1,13 @@
 { name = "crypto"
 , dependencies =
   [ "assert"
-  , "console"
   , "effect"
   , "foldable-traversable"
-  , "functions"
+  , "maybe"
+  , "newtype"
   , "node-buffer"
   , "nullable"
+  , "prelude"
   , "psci-support"
   ]
 , packages = ./packages.dhall
